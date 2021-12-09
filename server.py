@@ -12,7 +12,7 @@ DISCONNECT_MESSAGE: str = "!DISCONNECT"
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-socket_list = [server]
+
 rooms = {}
 print('Socket successfully created')
 
@@ -20,7 +20,6 @@ server.bind(ADDR)
 print(f'socket binded to {ADDR}')
 
 clients = []
-rooms = []
 
 class Client:
     connection: socket
@@ -39,7 +38,7 @@ def msg_handler(conn: socket, addr: tuple):
             client.room_name = room_name
             target_client = client
     conn.send('Room registered'.encode(FORMAT))
-
+    print(rooms[room_name])
     # Recieve and transmit messagees
     try:
         connected = True
